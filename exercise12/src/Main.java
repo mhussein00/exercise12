@@ -1,17 +1,15 @@
-import java.util.ArrayList;
-
 class QueueFullException extends Exception {}
 
 class QueueEmptyException extends Exception {}
 
 
 class Queue<E> {
-    private ArrayList<E> elements;
+    private E[] elements;
     private int index = 0;
     private int size;
 
     Queue(int size) {
-        elements = new ArrayList<>();
+        elements = (E[]) new Object[size];
         this.size = size;
     }
 
@@ -20,7 +18,7 @@ class Queue<E> {
             throw new QueueFullException();
         }
 
-        elements.add(index, element);
+        elements[index] = element;
         index++;
     }
 
@@ -29,9 +27,7 @@ class Queue<E> {
             throw new QueueEmptyException();
         }
 
-        E returnElement = elements.get(index);
-        elements.remove(returnElement);
-
+        E returnElement = elements[index-2];
         index++;
         size--;
         return returnElement;
@@ -41,7 +37,7 @@ class Queue<E> {
 
 public class Main {
     public static void main(String[] args) {
-        Queue<String> strings = new Queue<>(2);
+        Queue<String> strings = new Queue<>(3);
         try {
             strings.enqueue("Hello");
             strings.enqueue("World");
